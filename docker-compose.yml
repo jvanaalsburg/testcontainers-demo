@@ -1,0 +1,9 @@
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - ./src:/app
+    ports:
+      - 1323:1323
