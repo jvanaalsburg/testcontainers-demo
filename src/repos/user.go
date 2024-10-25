@@ -45,6 +45,22 @@ func (r Repo) CreateUser(user models.User) (models.User, error) {
 	return user, nil
 }
 
+func (r Repo) UpdateUser(user models.User) (models.User, error) {
+	query := `
+    UPDATE users SET
+      first_name=:first_name,
+      last_name=:last_name,
+      email=:email
+    WHERE id=:id`
+
+	_, err := r.conn.NamedExec(query, user)
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
+}
+
 func (r Repo) DeleteUser(id uuid.UUID) error {
 	_, err := r.conn.Exec("DELETE FROM users WHERE id=$1", id)
 	if err != nil {

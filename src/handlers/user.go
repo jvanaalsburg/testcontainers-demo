@@ -63,6 +63,33 @@ func (h Handler) CreateUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, newUser)
 }
 
+func (h Handler) UpdateUser(c echo.Context) error {
+	repo, err := repos.NewRepo(h.connStr)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	id, err := uuid.Parse(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	user := models.User{}
+	err = c.Bind(&user)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	user.Id = id
+
+	newUser, err := repo.UpdateUser(user)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, newUser)
+}
+
 func (h Handler) DeleteUser(c echo.Context) error {
 	repo, err := repos.NewRepo(h.connStr)
 	if err != nil {
