@@ -41,6 +41,8 @@ func main() {
 
 	e.GET("/users", handler.GetAllUsers)
 	e.GET("/users/:id", handler.GetUser)
+	e.POST("/users", handler.CreateUser)
+	e.DELETE("/users/:id", handler.DeleteUser)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
