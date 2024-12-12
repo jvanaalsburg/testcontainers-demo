@@ -60,7 +60,7 @@ func (h Handler) CreateUser(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	return c.JSON(http.StatusOK, newUser)
+	return c.JSON(http.StatusCreated, newUser)
 }
 
 func (h Handler) UpdateUser(c echo.Context) error {
