@@ -1,6 +1,12 @@
 package repos
 
 import (
+	"context"
+	"log"
+	"testing"
+
+	"demo-api/testhelpers"
+
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
@@ -16,4 +22,22 @@ func NewRepo(connStr string) (*Repo, error) {
 	}
 
 	return &Repo{conn: conn}, nil
+}
+
+func TestRepo(t *testing.T, dbInitScripts []string) *Repo {
+	ctx := context.Background()
+	container := testhelpers.CreatePostgresContainer(ctx, dbInitScripts)
+
+	t.Cleanup(func() {
+		if err := container.Terminate(ctx); err != nil {
+			t.Fatalf("failed to terminate container: %s", err)
+		}
+	})
+
+	repo, err := NewRepo(container.ConnectionString)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return repo
 }
