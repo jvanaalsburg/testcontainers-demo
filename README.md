@@ -59,6 +59,18 @@ If you run `watch docker ps` before running the command above, you should be abl
 
 **NOTE:** Since the integration tests all use Testcontainers, you can modify the data stored in the development database without affecting the test results.
 
+### Slides
+
+The slides from the Technical Seminar are located in the `slides/` directory. You can run the following to launch the dev server and view the presentation locally.
+
+```bash
+cd slides/
+yarn install 
+yarn dev
+```
+
+Then open http://localhost:3030/ in your browser to view the presentation.
+
 [docker]: https://www.docker.com/
 [echo]: https://echo.labstack.com/
 [testcontainers]: https://testcontainers.com/
